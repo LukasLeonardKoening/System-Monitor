@@ -18,7 +18,6 @@ public:
   long int UpTime();
   bool operator<(Process const &a) const;
 
-  // TODO: Declare any necessary private members
 private:
   int pid;
   float cpu_utilization{0.0};
