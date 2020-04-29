@@ -22,16 +22,24 @@ vector<string> splitString(string s) {
   return result;
 }
 
+// Reads in data about the OS
 string LinuxParser::OperatingSystem() {
+  // Init variables
   string line, key, value;
   std::ifstream filestream(kOSPath);
+
+  // If filestream is valid
   if (filestream.is_open()) {
+    // While end of file not reached
     while (std::getline(filestream, line)) {
+      // Replace charaters to use stringstream
       std::replace(line.begin(), line.end(), ' ', '_');
       std::replace(line.begin(), line.end(), '=', ' ');
       std::replace(line.begin(), line.end(), '"', ' ');
       std::istringstream linestream(line);
+      // Read in key value pairs
       while (linestream >> key >> value) {
+        // If key value pair of interest is reached, return it.
         if (key == "PRETTY_NAME") {
           std::replace(value.begin(), value.end(), '_', ' ');
           return value;
@@ -42,6 +50,7 @@ string LinuxParser::OperatingSystem() {
   return value;
 }
 
+// Reads in data about the Kernel
 string LinuxParser::Kernel() {
   string os, version, kernel, line;
   std::ifstream stream(kProcDirectory + kVersionFilename);
@@ -53,7 +62,7 @@ string LinuxParser::Kernel() {
   return kernel;
 }
 
-// BONUS: Update this to use std::filesystem
+// Reads in all pids of running tasks from filesystem
 vector<int> LinuxParser::Pids() {
   vector<int> pids;
   DIR *directory = opendir(kProcDirectory.c_str());
@@ -73,7 +82,7 @@ vector<int> LinuxParser::Pids() {
   return pids;
 }
 
-// TODO: Read and return the system memory utilization
+// Reads and returns the system memory utilization
 float LinuxParser::MemoryUtilization() {
   float total_mem, available_mem;
   string line, key, value;
@@ -93,7 +102,7 @@ float LinuxParser::MemoryUtilization() {
   return (total_mem - available_mem) / total_mem;
 }
 
-// TODO: Read and return the system uptime
+// Reads and returns the system uptime
 long LinuxParser::UpTime() {
   string uptime;
   string line;
@@ -127,7 +136,7 @@ vector<string> LinuxParser::CpuUtilization() {
   return {};
 }
 
-// TODO: Read and return the total number of processes
+// Reads and returns the total number of processes
 int LinuxParser::TotalProcesses() {
   string line;
   string key;
@@ -146,7 +155,7 @@ int LinuxParser::TotalProcesses() {
   return 0;
 }
 
-// TODO: Read and return the number of running processes
+// Reads and returns the number of running processes
 int LinuxParser::RunningProcesses() {
   string line;
   string key;

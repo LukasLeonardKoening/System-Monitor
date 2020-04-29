@@ -19,6 +19,7 @@ public:
   std::string OperatingSystem();
 
 private:
+  // Composition: System "has a" Processor called cpu
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
 };
