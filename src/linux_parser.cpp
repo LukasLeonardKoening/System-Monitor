@@ -99,6 +99,9 @@ float LinuxParser::MemoryUtilization() {
       }
     }
   }
+  if (total_mem == 0.0) {
+    return 0.0;
+  }
   return (total_mem - available_mem) / total_mem;
 }
 

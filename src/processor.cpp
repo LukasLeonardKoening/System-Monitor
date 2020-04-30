@@ -39,6 +39,9 @@ float Processor::Utilization() {
     prevsteal = steal;
 
     // calculate percentage of CPU usage
+    if (TOTAL == 0.0) {
+      return 0.0;
+    }
     return (TOTAL - IDLE) / TOTAL;
   } else {
     // Calculate needed jiffy values (previous state)
@@ -62,6 +65,9 @@ float Processor::Utilization() {
     prevsteal = steal;
 
     // calculate percentage of CPU usage
+    if (TOTAL_DIF == 0.0) {
+      return 0.0;
+    }
     return (TOTAL_DIF - IDLE_DIF) / TOTAL_DIF;
   }
   return 0.0;

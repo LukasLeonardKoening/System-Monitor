@@ -37,7 +37,11 @@ void Process::updateCpuUtilization() {
   const float TOTAL_TIME =
       (utime + stime + cutime + cstime) / sysconf(_SC_CLK_TCK);
   const float ELAPSED_TIME = systime - (starttime / sysconf(_SC_CLK_TCK));
-  cpu_utilization = TOTAL_TIME / ELAPSED_TIME;
+  if (ELAPSED_TIME == 0.0) {
+    cpu_utilization = 0.0;
+  } else {
+    cpu_utilization = TOTAL_TIME / ELAPSED_TIME;
+  }
 }
 
 // Return the command that generated this process
